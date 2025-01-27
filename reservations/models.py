@@ -222,10 +222,8 @@ class Order(models.Model):
                 self.status = 'active'
             else:
                 self.status = 'expired'
-            try:
-                super().save(*args, **kwargs)
-            except ValidationError as e:
-                raise ValidationError(f"Ошибка при сохранении заказа: {str(e)}")
+
+        super().save(*args, **kwargs)
         self.storage_unit.is_occupied = self.status in ['active', 'pending']
         self.storage_unit.save()
 
@@ -268,7 +266,7 @@ def user_post_delete_handler(sender: type, instance: User, **kwargs: Any) -> Non
     orders = Order.objects.filter(user=instance)
     for order in orders:
         order.release_storage_unit()
-        order.delete()  # Удаляем заказ
+        order.delete()
 
 
 class Link(models.Model):
