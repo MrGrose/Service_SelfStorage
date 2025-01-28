@@ -6,6 +6,8 @@ from django.dispatch import receiver
 from django.core.exceptions import ValidationError
 from reservations.link_statistics import shorten_link, count_clikcs
 from typing import List, Optional, Any
+from phonenumber_field.modelfields import PhoneNumberField
+from django.core.validators import RegexValidator, MinLengthValidator
 
 
 class User(models.Model):
@@ -22,9 +24,22 @@ class User(models.Model):
         get_orders(): Возвращает все заказы пользователя.
     """
     user_id = models.AutoField('id пользователя', primary_key=True)
-    name = models.CharField(verbose_name='Имя пользователя', max_length=200)
-    phone_number = models.CharField(verbose_name='Телефон', max_length=20)
-    user_address = models.CharField(verbose_name='Адрес клиента', max_length=200, null=True, blank=True)
+    name = models.CharField(
+        verbose_name='Имя пользователя',
+        max_length=200,
+        validators=[RegexValidator(
+            regex=r'^[А-ЯЁ][а-яё]+ [А-ЯЁ][а-яё]+ [А-ЯЁ][а-яё]+$',
+            message='Имя должно быть в формате: Иванов Иван Иванович',
+            code='invalid_name')])
+    phone_number = PhoneNumberField(verbose_name='Телефон', region='RU', blank=True)
+    user_address = models.CharField(
+        verbose_name='Адрес клиента',
+        max_length=200,
+        validators=[RegexValidator(regex=r'^[а-я-А-Я0-9., ]+$',
+                                   message='Адрес может содержать \n'
+                                   'рус. буквы, цифры, пробелы и символы: , . -',
+                                   code='invalid_address'),
+                    MinLengthValidator(5)], null=True, blank=True,)
 
     class Meta:
         verbose_name = 'Пользователь'
