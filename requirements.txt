@@ -8,3 +8,4 @@ qrcode==8.0
 schedule==1.2.2
 requests~=2.32.3
 python-dotenv~=1.0.1
+pillow==11.1.0
