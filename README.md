@@ -77,7 +77,7 @@
     DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',}}
+        'NAME': BASE_DIR / 'ваше_имя_бд.sqlite3',}}
     ```
     ```bash
     LANGUAGE_CODE = 'ru'
@@ -111,7 +111,16 @@
 7. Откройте админскую панель по адресу: http://127.0.0.1:8000/
 
 ## Настройка
-Необходимо создать `.env` файл с ключами: 
+Необходимо создать `.env` файл:
+
+    ```bash 
+    SECRET_KEY=ваш_секретный_ключ
+    DEBUG=ваша_настройка
+    ALLOWED_HOSTS=ваша_настройка
+    VK_TOKEN=ваш_токен
+    TG_BOT_TOKE=ваш_токен
+    ```
+    
 - [VK_TOKEN](https://dev.vk.com/ru/api/overview) для работы с API ВКонтакте при использовании сокращенных ссылок, 
 - [TG_BOT_TOKEN](https://core.telegram.org/bots/tutorial#obtain-your-bot-token) для работы с телеграмм ботом.
 
