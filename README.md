@@ -123,6 +123,3 @@
     
 - [VK_TOKEN](https://dev.vk.com/ru/api/overview) для работы с API ВКонтакте при использовании сокращенных ссылок, 
 - [TG_BOT_TOKEN](https://core.telegram.org/bots/tutorial#obtain-your-bot-token) для работы с телеграмм ботом.
-
-### Лицензия: 
-MIT License.
